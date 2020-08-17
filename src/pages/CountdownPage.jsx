@@ -1,60 +1,43 @@
-import React, { Component } from 'react'
+import React from 'react'
 import CountdownTimer from '../components/CountdownTimer';
-import ReduxTester from '../components/ReduxTester';
+import { useHistory } from "react-router-dom";
 
-export class CountdownPage extends Component {
+import { useSelector } from 'react-redux';
 
-	constructor(props) {
-		super(props);
-		
-		this.state = {
-			currentTime: props.location.data.initialCountdown,
-			dataInput: props.location.data,
-		};
+export function CountdownPage(props) {
 
-		console.log('CountdownPage input data:');
-		console.log(this.state.dataInput);
+	const history = useHistory()
+
+	// Load the config from the Redux store
+	const config = useSelector((state) => state.config)
+
+	function goBack () {
+		history.push(`/`)
 	}
 
-	goBack = () => {
-		this.props.history.goBack();
+	function countdownCompleted () {
+		history.push(`/ChordPage`)
 	}
 
-	countdownTicked = () => {
-	}
+	return (
+		<div className="wrapper">
+			<div className="form-wrapper">
 
-	countdownCompleted = () => {
+				<h2>Get ready!</h2>
 
-		this.props.history.push({
-			pathname: '/ChordPage',
-			data: this.state.dataInput,
-		});
-	}
+				<h1 className='countdownTimer'>
+					<CountdownTimer
+						startingTime={parseInt(config.initialCountdown)}
+						onComplete={countdownCompleted}
+						/>
+				</h1>
 
-	render() {
-		return (
-			<div className="wrapper">
-				<div className="form-wrapper">
-
-					<ReduxTester />
-
-					<h2>Get ready!</h2>
-
-					<h1 className='countdownTimer'>
-						<CountdownTimer
-							startingTime={parseInt(this.state.dataInput.initialCountdown)}
-							onComplete={this.countdownCompleted}
-							onTick={this.countdownTicked}
-							/>
-					</h1>
-
-					<button
-						onClick={this.goBack}
-						>Go back</button>
-				</div>
+				<button
+					onClick={goBack}
+					>Go back</button>
 			</div>
-		)
-	}
+		</div>
+	)
 }
 
 export default CountdownPage

@@ -1,53 +1,38 @@
-import React, { Component } from 'react'
-import CountdownTimer from '../components/CountdownTimer';
+import React from 'react'
+import { useSelector } from 'react-redux';
 import { useHistory } from "react-router-dom";
 
-export class FinishedPage extends Component {
+export function FinishedPage (props) {
 
-	constructor(props) {
-		super(props);
+	const history = useHistory()
 
-		this.state = {
-			dataInput:		props.location.data,
-			duration:		props.location.data.duration,
-			chordsPlayed:	Math.ceil(props.location.data.duration / props.location.data.timePerChord),
+	// Load the config from the Redux store
+	const config = useSelector((state) => state.config)
 
-			// Restore the session data in case the user restarts
-			timePerChord: props.location.data.timePerChord,
-			duration: props.location.data.duration,
-			initialCountdown: props.location.data.initialCountdown,
-			dataInput: props.location.data,
-		};
+	function restartSession () {
+		history.push(`/CountdownPage`)
 	}
 
-	restartSession = () => {
-		this.props.history.push({
-			pathname: '/CountdownPage',
-			data: this.state,
-		});
+	function backToHome () {
+		history.push(`/`)
 	}
 
-	backToHome = () => {
-		this.props.history.push({
-			pathname: '/',
-		});
-	}
+	// Calculate how many chords were played
+	let chordsPlayed = Math.ceil(config.duration / config.timePerChord)
 
-	render() {
-		return (
-			<div className="wrapper">
-				<div className="form-wrapper">
-					<h2>Congratulations!</h2>
+	return (
+		<div className="wrapper">
+			<div className="form-wrapper">
+				<h2>Congratulations!</h2>
 
-					<p>You completed the series, playing {this.state.chordsPlayed} chord(s) acorss a {this.state.duration} minute session.</p>
+				<p>You completed the series, playing {chordsPlayed} chord(s) acorss a {config.duration} minute session.</p>
 
-					<button onClick={this.restartSession}>Restart the session</button>
-					<br />
-					<button onClick={this.backToHome}>Back to home</button>
-				</div>
+				<button onClick={restartSession}>Restart the session</button>
+				<br />
+				<button onClick={backToHome}>Back to home</button>
 			</div>
-		)
-	}
+		</div>
+	)
 }
 
 export default FinishedPage

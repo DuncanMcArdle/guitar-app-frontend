@@ -1,5 +1,7 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import CountdownTimer from '../components/CountdownTimer';
+import { useSelector } from 'react-redux';
+import { useHistory } from "react-router-dom";
 
 const chords = [
 	'A',
@@ -7,90 +9,59 @@ const chords = [
 	'F',
 ];
 
-export class ChordPage extends Component {
+export function ChordPage (props) {
 
-	
+	const [currentChord, setCurrentChord] = useState(Math.floor(Math.random() * chords.length));
 
-	constructor(props) {
-		super(props);
+	// Load the config from the Redux store
+	const config = useSelector((state) => state.config)
 
-		// Manually set data (TESTING ONLY)
-		/*props.location.data = new Object;
-		props.location.data.timePerChord = 2;
-		props.location.data.duration = 3;*/
+	const history = useHistory()
 
-		// Pick the first chord
-
-		this.state = {
-			currentChord: 0,
-			countdownTimerElement: React.createRef(),
-			timePerChord: props.location.data.timePerChord,
-			duration: parseInt(props.location.data.duration),
-			dataInput: props.location.data,
-		};
-
-		console.log(props.location.data);
+	function goBack () {
+		history.push(`/`)
 	}
 
-	goBack = () => {
-		this.props.history.go(-2);
-	}
-
-	changeChord = () => {
+	function changeChord () {
 
 		// Pick a random chord
 		let newChord = Math.floor(Math.random() * chords.length);
 
-		this.setState({
-			currentChord: newChord,
-			timePerChord: this.state.timePerChord,
-		});
-
-		console.log(`Calling inner function`);
-		this.state.countdownTimerElement.current.innerFunction('test123');
+		setCurrentChord(newChord);
 	}
 
-	countdownCompleted = () => {
-
+	function countdownCompleted () {
 		// Show the next chord
-
-		this.changeChord();
+		changeChord();
 	}
 
-	durationTimerComplete = () => {
-		this.props.history.push({
-			pathname: '/FinishedPage',
-			data: this.state,
-		});
+	function durationTimerComplete () {
+		history.push(`/FinishedPage`)
 	}
 
-	render() {
+	return (
+		<div className="wrapper">
+			<div className="form-wrapper">
+				<h2>Play the chord</h2>
 
-		return (
-			<div className="wrapper">
-				<div className="form-wrapper">
-					<h2>Play the chord</h2>
+				<h1 className='chord'>{chords[currentChord]}</h1>
 
-					<h1 className='chord'>{chords[this.state.currentChord]}</h1>
+				<p className='chordTimeRemaining'>Chord time remaining: <CountdownTimer
+						startingTime={parseInt(config.timePerChord)}
+						onComplete={countdownCompleted}
+						className='timeRemainingCountdownTimer' /> second(s)</p>
 
-					<p className='chordTimeRemaining'>Chord time remaining: <CountdownTimer
-							ref={this.state.countdownTimerElement}
-							startingTime={parseInt(this.state.timePerChord)}
-							onComplete={this.countdownCompleted}
-							className='timeRemainingCountdownTimer' /> second(s)</p>
+				{<p className='totalTimeRemaining'>Total time remaining: <CountdownTimer
+						startingTime={parseInt(config.duration)/* * 60*/}
+						onComplete={durationTimerComplete}
+						className='timeRemainingCountdownTimer' /> second(s)</p>}
 
-					{<p className='totalTimeRemaining'>Total time remaining: <CountdownTimer
-							startingTime={this.state.duration/* * 60*/}
-							onComplete={this.durationTimerComplete}
-							className='timeRemainingCountdownTimer' /> second(s)</p>}
-
-					<button
-						onClick={this.goBack}
-						>Go back</button>
-				</div>
+				<button
+					onClick={goBack}
+					>Go back</button>
 			</div>
-		)
-	}
+		</div>
+	)
 }
 
 export default ChordPage

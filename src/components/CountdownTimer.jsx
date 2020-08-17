@@ -1,66 +1,37 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-export class CountdownTimer extends Component {
+export function CountdownTimer (props) {
 
-    constructor(props) {
-        super (props);
+    const [currentTime, setCurrentTime] = useState(props.startingTime);
 
-        this.state = {
-            currentTime: this.props.startingTime,
-            timer: null,
-        }
-    }
+    useEffect(() => {
+        const timer=setTimeout(() => {
+            updateTimer();
+          }, 1000);
 
-	componentDidMount() {
-		this.setState({
-            timer: setTimeout(() => this.updateTimer(), 1000),
-        });
-    }
-    
-    componentWillUnmount() {
-        clearTimeout(this.state.timer)
-    }
+        // Clear timeout if the component is unmounted
+        return () => clearTimeout(timer);
+    });
 
-    innerFunction(param) {
-        console.log(`Inner function called with parameter ${param}`);
+	function updateTimer() {
 
-        // Reset the timer
-        this.setState({
-            currentTime: this.props.startingTime,
-            timer: setTimeout(() => this.updateTimer(), 1000),
-        });
-    }
-
-	updateTimer = () => {
-
-		this.setState({
-            currentTime: this.state.currentTime - 1,
-        });
+        setCurrentTime(currentTime - 1);
         
         // Check if the countdown has completed
-        if(this.state.currentTime <= 0) {
-            // complete the countdown
-            this.props.onComplete();
-        }
-        else
-        {
-            // Call the tick function (if supplied)
-            this.props.onTick && this.props.onTick();
+        if(currentTime <= 0) {
+            setCurrentTime(props.startingTime);
 
-            this.setState({
-                timer: setTimeout(() => this.updateTimer(), 1000),
-            });
+            // complete the countdown
+            props.onComplete();
         }
 	}
 
-    render() {
-        return (
-            <span>
-                {this.state.currentTime}
-            </span>
-        )
-    }
+    return (
+        <span>
+            {currentTime}
+        </span>
+    )
 }
 
 // PropTypes

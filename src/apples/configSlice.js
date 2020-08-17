@@ -1,29 +1,23 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-    number: 0,
+    initialCountdown: null,
+    timePerChord: null,
+    duration: null,
 };
 
 const configSlice = createSlice({
   name: 'config',
   initialState,
   reducers: {
-    increase: state => {
-        state.number += 1;
-    },
-    decrease: state => {
-        state.number -= 1
-    },
     setConfig: (state, action) => {
-      state = action.payload;
-    },
+        state.initialCountdown = action.payload.initialCountdown;
+        state.timePerChord = action.payload.timePerChord;
+        state.duration = action.payload.duration;
+    }
   },
 })
 
-export const { increase, decrease, setConfig } = configSlice.actions;
-
-
-export const getConfig = state => state.config;
-export const getCount = 1;
+export const { setConfig } = configSlice.actions;
 
 export default configSlice.reducer
