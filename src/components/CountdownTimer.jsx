@@ -1,43 +1,81 @@
-import React, { useState, useEffect } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-export function CountdownTimer (props) {
+export class CountdownTimer extends Component {
 
-    const [currentTime, setCurrentTime] = useState(props.startingTime);
+    constructor(props) {
+        super (props);
 
-    useEffect(() => {
-        const timer=setTimeout(() => {
-            updateTimer();
-          }, 1000);
+        this.state = {
+            currentTime: this.props.startingTime,
+            timer: null,
+        }
+    }
 
-        // Clear timeout if the component is unmounted
-        return () => clearTimeout(timer);
-    });
+	componentDidMount() {
+		this.setState({
+            timer: setTimeout(() => this.updateTimer(), 1000),
+        });
+    }
 
-	function updateTimer() {
+    componentWillUnmount() {
+        clearTimeout(this.state.timer)
+    }
 
-        setCurrentTime(currentTime - 1);
-        
+    restartTimer() {
+        // Reset the timer
+        this.setState({
+            currentTime: this.props.startingTime,
+            timer: setTimeout(() => this.updateTimer(), 1000),
+        });
+    }
+
+    formatTime(seconds) {
+        let extension = 'second';
+        if(seconds > 60) {
+            seconds = Math.ceil(seconds / 60);
+            extension = 'minute';
+        }
+        return `${seconds} ${extension}${(seconds !== 1) ? 's' : ''}`
+    }
+
+	updateTimer = () => {
+
+		this.setState({
+            currentTime: this.state.currentTime - 1,
+        });
+
         // Check if the countdown has completed
-        if(currentTime <= 0) {
-            setCurrentTime(props.startingTime);
+        if(this.state.currentTime <= 0) {
+
+            this.setState({
+                currentTime: this.props.startingTime,
+            });
 
             // complete the countdown
-            props.onComplete();
+            this.props.onComplete();
+        }
+        else {
+            this.setState({
+                timer: setTimeout(() => this.updateTimer(), 1000),
+            });
         }
 	}
 
-    return (
-        <span>
-            {currentTime}
-        </span>
-    )
+    render() {
+        return (
+            <span>
+                {this.props.formatNumber ? this.formatTime(this.state.currentTime) : this.state.currentTime}
+            </span>
+        )
+    }
 }
 
 // PropTypes
 CountdownTimer.propTypes = {
     startingTime:   PropTypes.number.isRequired,
     onComplete:     PropTypes.func.isRequired,
+    formatNumber:   PropTypes.bool.isRequired,
 }
 
 export default CountdownTimer

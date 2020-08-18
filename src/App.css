@@ -132,6 +132,11 @@ button:hover {
   text-align: center;
 }
 
-.timeRemainingCountdownTimer {
-  background-color:red;
+.chordTimeRemaining {
+  text-align: center;
+  font-size: 2em;
+}
+
+.totalTimeRemaining {
+  text-align: center;
 }

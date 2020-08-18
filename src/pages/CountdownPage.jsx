@@ -29,6 +29,7 @@ export function CountdownPage(props) {
 					<CountdownTimer
 						startingTime={parseInt(config.initialCountdown)}
 						onComplete={countdownCompleted}
+						formatNumber={false}
 						/>
 				</h1>
 

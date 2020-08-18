@@ -1,17 +1,22 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import CountdownTimer from '../components/CountdownTimer';
 import { useSelector } from 'react-redux';
 import { useHistory } from "react-router-dom";
 
 const chords = [
 	'A',
+	'Am',
 	'E',
-	'F',
+	'Em',
+	'Fmaj',
+	'D',
+	'Dm',
 ];
 
 export function ChordPage (props) {
 
 	const [currentChord, setCurrentChord] = useState(Math.floor(Math.random() * chords.length));
+	const chordTimerReference = useRef(null);
 
 	// Load the config from the Redux store
 	const config = useSelector((state) => state.config)
@@ -33,6 +38,7 @@ export function ChordPage (props) {
 	function countdownCompleted () {
 		// Show the next chord
 		changeChord();
+		chordTimerReference.current.restartTimer();
 	}
 
 	function durationTimerComplete () {
@@ -46,15 +52,18 @@ export function ChordPage (props) {
 
 				<h1 className='chord'>{chords[currentChord]}</h1>
 
-				<p className='chordTimeRemaining'>Chord time remaining: <CountdownTimer
+				<p className='chordTimeRemaining'>Play for <CountdownTimer
+						ref={chordTimerReference}
 						startingTime={parseInt(config.timePerChord)}
 						onComplete={countdownCompleted}
-						className='timeRemainingCountdownTimer' /> second(s)</p>
+						formatNumber={true}
+						className='timeRemainingCountdownTimer' /></p>
 
 				{<p className='totalTimeRemaining'>Total time remaining: <CountdownTimer
 						startingTime={parseInt(config.duration)/* * 60*/}
 						onComplete={durationTimerComplete}
-						className='timeRemainingCountdownTimer' /> second(s)</p>}
+						formatNumber={true}
+						className='timeRemainingCountdownTimer' /></p>}
 
 				<button
 					onClick={goBack}
