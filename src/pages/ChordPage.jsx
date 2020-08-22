@@ -1,7 +1,7 @@
-import React, { useState, useRef } from 'react'
-import CountdownTimer from '../components/CountdownTimer';
+import React, { useState, useRef } from 'react';
 import { useSelector } from 'react-redux';
-import { useHistory } from "react-router-dom";
+import { useHistory } from 'react-router-dom';
+import { CountdownTimer } from '../components/CountdownTimer';
 
 const chords = [
 	'A',
@@ -13,36 +13,34 @@ const chords = [
 	'Dm',
 ];
 
-export function ChordPage (props) {
-
+export function ChordPage() {
 	const [currentChord, setCurrentChord] = useState(Math.floor(Math.random() * chords.length));
 	const chordTimerReference = useRef(null);
 
 	// Load the config from the Redux store
-	const config = useSelector((state) => state.config)
+	const config = useSelector((state) => state.config);
 
-	const history = useHistory()
+	const history = useHistory();
 
-	function goBack () {
-		history.push(`/`)
+	function goBack() {
+		history.push('/');
 	}
 
-	function changeChord () {
-
+	function changeChord() {
 		// Pick a random chord
-		let newChord = Math.floor(Math.random() * chords.length);
+		const newChord = Math.floor(Math.random() * chords.length);
 
 		setCurrentChord(newChord);
 	}
 
-	function countdownCompleted () {
+	function countdownCompleted() {
 		// Show the next chord
 		changeChord();
 		chordTimerReference.current.restartTimer();
 	}
 
-	function durationTimerComplete () {
-		history.push(`/FinishedPage`)
+	function durationTimerComplete() {
+		history.push('/FinishedPage');
 	}
 
 	return (
@@ -50,27 +48,36 @@ export function ChordPage (props) {
 			<div className="form-wrapper">
 				<h2>Play the chord</h2>
 
-				<h1 className='chord'>{chords[currentChord]}</h1>
+				<h1 className="chord">{chords[currentChord]}</h1>
 
-				<p className='chordTimeRemaining'>Play for <CountdownTimer
+				<p className="chordTimeRemaining">
+					Play for <CountdownTimer
 						ref={chordTimerReference}
-						startingTime={parseInt(config.timePerChord)}
+						startingTime={Number(config.timePerChord)}
 						onComplete={countdownCompleted}
-						formatNumber={true}
-						className='timeRemainingCountdownTimer' /></p>
+						formatNumber
+						className="timeRemainingCountdownTimer"
+					/>
+				</p>
 
-				{<p className='totalTimeRemaining'>Total time remaining: <CountdownTimer
-						startingTime={parseInt(config.duration)/* * 60*/}
+				<p className="totalTimeRemaining">
+					Total time remaining: <CountdownTimer
+						startingTime={Number(config.duration) * 60}
 						onComplete={durationTimerComplete}
-						formatNumber={true}
-						className='timeRemainingCountdownTimer' /></p>}
+						formatNumber
+						className="timeRemainingCountdownTimer"
+					/>
+				</p>
 
 				<button
+					type="submit"
 					onClick={goBack}
-					>Go back</button>
+				>
+					Go back
+				</button>
 			</div>
 		</div>
-	)
+	);
 }
 
-export default ChordPage
+export default ChordPage;

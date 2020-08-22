@@ -29,7 +29,7 @@ SILVER PINK: #C9ADA7
 .form-wrapper {
   display: flex;
   flex-direction: column;
-  width: 450px;
+  width: 500px;
   max-width: 80%;
   min-width: 100px;
   min-height: 400px;
@@ -75,6 +75,7 @@ input, select {
   border-radius: 5px;
   outline: none;
   border: 1px solid #d6d1d5;
+  float: right;
 }
 
 input::placeholder {

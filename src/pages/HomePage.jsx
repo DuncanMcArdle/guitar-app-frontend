@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { useHistory } from "react-router-dom";
+import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { setConfig } from '../apples/configSlice.js';
+import { setConfig } from '../apples/configSlice';
 
-export function HomePage (props) {
-
+export function HomePage() {
 	// Default state values
 	const [config, setLocalConfig] = useState({
 		chords: 'Basic',
@@ -17,47 +16,40 @@ export function HomePage (props) {
 			showChord: '',
 			initialCountdown: '',
 			timePerChord: '',
-			duration: ''
-		}
+			duration: '',
+		},
 	});
 
 	// Redux
-	const dispatch = useDispatch()
-	const history = useHistory()
+	const dispatch = useDispatch();
+	const history = useHistory();
 
 	// Validate a form field
-	function validateFormField (fieldName, value) {
-
-		let errors = config.errors;
+	function validateFormField(fieldName, value) {
+		const { errors } = config;
 
 		// Reset any existing errors
 		errors[fieldName] = '';
-		
-		switch(fieldName) {
 
+		switch (fieldName) {
 			case 'chords':
 			case 'showChord': {
 				errors[fieldName] = (value === '-1' ? 'Please select an option' : '');
 				break;
 			}
 
-			case "timePerChord": {
-				if(value < 1 || value > 60) {
+			case 'timePerChord': {
+				if (value < 1 || value > 60) {
 					errors[fieldName] = 'Please enter between 1 and 60 seconds';
 				}
 				break;
 			}
 
-			case "initialCountdown":
-			case "duration": {
-				if(value < 1 || value > 60) {
-					errors[fieldName] = 'Please enter between 1 and 60 seconds';
-				}
-				break;
-			}
-
-			// Inputs which do not require validation
+			case 'initialCountdown':
 			case 'duration': {
+				if (value < 1 || value > 60) {
+					errors[fieldName] = 'Please enter between 1 and 60 minutes';
+				}
 				break;
 			}
 
@@ -66,26 +58,22 @@ export function HomePage (props) {
 			}
 		}
 
-		// Set the input's state
-		setLocalConfig(config => ({ ...config, [errors]: errors }));
+		// Set the input's state and new value
+		setLocalConfig(() => ({ ...config, [fieldName]: value, [errors]: errors }));
 	}
-	
 
 	// Handle form input changes
 	function handleFormInputChange(event) {
 		event.persist();
 
-		let {name, value} = event.target;
+		const { name, value } = event.target;
 
-		setLocalConfig(config => ({ ...config, [name]: value }));
-
-		// Validate the changed field
+		// Validate the changed field (and set its new value)
 		validateFormField(name, value);
 	}
 
 	// Add an entry
-	function submitForm(event) {
-
+	function submitForm() {
 		// Validate the form
 		validateFormField('chords', config.chords);
 		validateFormField('showChord', config.showChord);
@@ -93,24 +81,27 @@ export function HomePage (props) {
 		validateFormField('timePerChord', config.timePerChord);
 		validateFormField('duration', config.duration);
 
+		let errorFound = false;
+
 		// Check if any errors are present
-		for(let prop in config.errors)
-		{
-			if(config.errors[prop].length) {
-				console.log(`Error present: ${prop}`);
-				return;
+		Object.keys(config.errors).forEach((key) => {
+			if (config.errors[key].length) {
+				console.log(`Error present: ${config.errors[key]}`);
+				errorFound = true;
 			}
+		});
+
+		if (!errorFound) {
+			// Update the Redux store
+			dispatch(setConfig({
+				initialCountdown: config.initialCountdown,
+				timePerChord: config.timePerChord,
+				duration: config.duration,
+			}));
+
+			// Move the user to the countdown page
+			history.push('/CountdownPage');
 		}
-
-		// Update the Redux store
-		dispatch(setConfig({
-			initialCountdown: config.initialCountdown,
-			timePerChord: config.timePerChord,
-			duration: config.duration,
-		}));
-
-		// Move the user to the countdown page
-		history.push(`/CountdownPage`)
 	}
 
 	return (
@@ -119,49 +110,58 @@ export function HomePage (props) {
 
 				<h2>Guitar thing</h2>
 
-				<div className='chords'>
-					<label htmlFor='chords'>Chords</label>
-					<select name='chords' onChange={handleFormInputChange}>
-						<option value='-1'>Please select...</option>
-						<option>Basic</option>
-						<option>Advanced</option>
-						<option>Expert</option>
-					</select>
-					{config.errors.chords.length > 0 && <span className='error'>{config.errors.chords}</span>}
+				<div className="chords">
+					<label htmlFor="chords">
+						Chords
+						<select name="chords" onChange={handleFormInputChange}>
+							<option value="-1">Please select...</option>
+							<option>Basic</option>
+							<option>Advanced</option>
+							<option>Expert</option>
+						</select>
+					</label>
+					{config.errors.chords.length > 0 && <span className="error">{config.errors.chords}</span>}
 				</div>
 
-				<div className='showChord'>
-					<label htmlFor='showChord'>Show chord</label>
-					<select name='showChord' onChange={handleFormInputChange}>
-						<option value='-1'>Please select...</option>
-						<option>Yes</option>
-						<option>No</option>
-					</select>
-					{config.errors.showChord.length > 0 && <span className='error'>{config.errors.showChord}</span>}
+				<div className="showChord">
+					<label htmlFor="showChord">Show chord
+						<select name="showChord" onChange={handleFormInputChange}>
+							<option value="-1">Please select...</option>
+							<option>Yes</option>
+							<option>No</option>
+						</select>
+					</label>
+					{config.errors.showChord.length > 0 && <span className="error">{config.errors.showChord}</span>}
 				</div>
 
-				<div className='initialCountdown'>
-					<label htmlFor='initialCountdown'>Initial countdown (seconds)</label>
-					<input name='initialCountdown' type='number' value={config.initialCountdown} onChange={handleFormInputChange} />
-					{config.errors.initialCountdown.length > 0 && <span className='error'>{config.errors.initialCountdown}</span>}
+				<div className="initialCountdown">
+					<label htmlFor="initialCountdown">
+						Initial countdown (seconds)
+						<input name="initialCountdown" type="number" value={config.initialCountdown} onChange={handleFormInputChange} />
+					</label>
+					{config.errors.initialCountdown.length > 0 && <span className="error">{config.errors.initialCountdown}</span>}
 				</div>
 
-				<div className='timePerChord'>
-					<label htmlFor='timePerChord'>Time per chord (seconds)</label>
-					<input name='timePerChord' type='number' value={config.timePerChord} onChange={handleFormInputChange} />
-					{config.errors.timePerChord.length > 0 && <span className='error'>{config.errors.timePerChord}</span>}
+				<div className="timePerChord">
+					<label htmlFor="timePerChord">
+						Time per chord (seconds)
+						<input name="timePerChord" type="number" value={config.timePerChord} onChange={handleFormInputChange} />
+					</label>
+					{config.errors.timePerChord.length > 0 && <span className="error">{config.errors.timePerChord}</span>}
 				</div>
 
-				<div className='duration'>
-					<label htmlFor='duration'>Duration (minutes)</label>
-					<input name='duration' type='number' value={config.duration} onChange={handleFormInputChange} />
-					{config.errors.duration.length > 0 && <span className='error'>{config.errors.duration}</span>}
+				<div className="duration">
+					<label htmlFor="duration">
+						Duration (minutes)
+						<input name="duration" type="number" value={config.duration} onChange={handleFormInputChange} />
+					</label>
+					{config.errors.duration.length > 0 && <span className="error">{config.errors.duration}</span>}
 				</div>
 
-				<button onClick={submitForm}>Start</button>
+				<button type="button" onClick={submitForm}>Start</button>
 			</div>
 		</div>
 	);
 }
 
-export default HomePage
+export default HomePage;
