@@ -122,6 +122,10 @@ button:hover {
   flex-wrap: wrap;
 }
 
+.currentChord {
+  text-align: center;
+}
+
 .countdownTimer {
   text-align: center;
   font-size: 10em;

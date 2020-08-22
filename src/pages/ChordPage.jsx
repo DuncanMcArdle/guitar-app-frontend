@@ -50,6 +50,8 @@ export function ChordPage() {
 
 				<h1 className="chord">{chords[currentChord]}</h1>
 
+				{config.showChord.toUpperCase() === 'YES' && <p className="currentChord">(would be showing the chord here)</p>}
+
 				<p className="chordTimeRemaining">
 					Play for <CountdownTimer
 						ref={chordTimerReference}
