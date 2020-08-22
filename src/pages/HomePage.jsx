@@ -6,11 +6,11 @@ import { setConfig } from '../apples/configSlice';
 export function HomePage() {
 	// Default state values
 	const [config, setLocalConfig] = useState({
-		chords: 'Basic',
-		showChord: 'Yes',
-		initialCountdown: 1,
-		timePerChord: 2,
-		duration: 10,
+		chords: '-1',
+		showChord: '-1',
+		initialCountdown: 3,
+		timePerChord: 5,
+		duration: 2,
 		errors: {
 			chords: '',
 			showChord: '',
@@ -94,9 +94,12 @@ export function HomePage() {
 		if (!errorFound) {
 			// Update the Redux store
 			dispatch(setConfig({
-				initialCountdown: config.initialCountdown,
-				timePerChord: config.timePerChord,
-				duration: config.duration,
+				chord:				config.chords,
+				showChord:			config.showChord,
+				something:			7,
+				initialCountdown:	config.initialCountdown,
+				timePerChord:		config.timePerChord,
+				duration:			config.duration,
 			}));
 
 			// Move the user to the countdown page
