@@ -1,7 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import './App.css';
-import 'bootstrap/dist/css/bootstrap.css';
 import { HomePage } from './pages/HomePage';
 import { CountdownPage } from './pages/CountdownPage';
 import { ChordPage } from './pages/ChordPage';

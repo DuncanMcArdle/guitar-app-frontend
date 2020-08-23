@@ -1,4 +1,4 @@
-import React, { ReactElement, FunctionComponent } from 'react';
+import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 
 interface Props {
@@ -11,6 +11,7 @@ const Label = styled.div`
   float: left;
   margin-top: 1em;
   margin-bottom: 1em;
+  text-align: left;
 `
 
 const Input = styled.div`

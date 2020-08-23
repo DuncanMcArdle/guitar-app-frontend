@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { RootState } from '../redux/store';
+import { Button } from '../components/Button';
 
 export function FinishedPage() {
 	const history = useHistory();
@@ -21,13 +22,17 @@ export function FinishedPage() {
 	const chordsPlayed = Math.ceil(config.duration / config.timePerChord);
 
 	return (
-		<div className="wrapper">
-			<div className="form-wrapper">
-				<h2>Congratulations!</h2>
-				<p>You completed the series, playing {chordsPlayed} chord(s) acorss a {config.duration} minute session.</p>
-				<button type="button" onClick={restartSession}>Restart the session</button>
-				<br />
-				<button type="button" onClick={backToHome}>Back to home</button>
+		<div className="form__wrapper">
+			<h1>Lesson complete</h1>
+
+			<div>
+				<h2>Congratulation!</h2>
+				<p>You completed the series, playing {chordsPlayed} chord(s) across a {config.duration} minute session.</p>
+			</div>
+
+			<div>
+				<Button onClick={restartSession} text="Restart the session" />
+				<Button onClick={backToHome} text="Back to home" />
 			</div>
 		</div>
 	);

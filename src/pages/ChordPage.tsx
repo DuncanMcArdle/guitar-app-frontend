@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { CountdownTimer } from '../components/CountdownTimer';
 import { RootState } from '../redux/store';
+import { Button } from '../components/Button';
 
 const chords = [
 	'A',
@@ -45,10 +46,10 @@ export function ChordPage() {
 	}
 
 	return (
-		<div className="wrapper">
-			<div className="form-wrapper">
-				<h2>Play the chord</h2>
+		<div className="form__wrapper">
+			<h1>Play the chord</h1>
 
+			<div>
 				<h1 className="chord">{chords[currentChord]}</h1>
 
 				{config.showChord.toUpperCase() === 'YES' && <p className="currentChord">(would be showing the chord here)</p>}
@@ -69,14 +70,9 @@ export function ChordPage() {
 						formatNumber
 					/>
 				</p>
-
-				<button
-					type="submit"
-					onClick={goBack}
-				>
-					Go back
-				</button>
 			</div>
+
+			<Button onClick={goBack} text="Go back" />
 		</div>
 	);
 }

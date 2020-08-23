@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { CountdownTimer } from '../components/CountdownTimer';
 import { RootState } from '../redux/store';
+import { Button } from '../components/Button';
 
 export function CountdownPage() {
 	const history = useHistory();
@@ -19,26 +20,19 @@ export function CountdownPage() {
 	}
 
 	return (
-		<div className="wrapper">
-			<div className="form-wrapper">
+		<div className="form__wrapper">
 
-				<h2>Get ready!</h2>
+			<h1>Get ready!</h1>
 
-				<h1 className="countdownTimer">
-					<CountdownTimer
-						startingTime={Number(config.initialCountdown)}
-						onComplete={countdownCompleted}
-						formatNumber={false}
-					/>
-				</h1>
+			<h2 className="countdownTimer">
+				Starting in <CountdownTimer
+					startingTime={Number(config.initialCountdown)}
+					onComplete={countdownCompleted}
+					formatNumber={false}
+				/> seconds
+			</h2>
 
-				<button
-					type="button"
-					onClick={goBack}
-				>
-					Go back
-				</button>
-			</div>
+			<Button onClick={goBack} text="Go back" />
 		</div>
 	);
 }
