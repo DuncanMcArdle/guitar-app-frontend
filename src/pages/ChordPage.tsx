@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { CountdownTimer } from '../components/CountdownTimer';
+import { RootState } from '../redux/store';
 
 const chords = [
 	'A',
@@ -15,10 +16,10 @@ const chords = [
 
 export function ChordPage() {
 	const [currentChord, setCurrentChord] = useState(Math.floor(Math.random() * chords.length));
-	const chordTimerReference = useRef(null);
+	const chordTimerReference = useRef<CountdownTimer>(null);
 
 	// Load the config from the Redux store
-	const config = useSelector((state) => state.config);
+	const config = useSelector((state:RootState) => state.config);
 
 	const history = useHistory();
 
@@ -36,7 +37,7 @@ export function ChordPage() {
 	function countdownCompleted() {
 		// Show the next chord
 		changeChord();
-		chordTimerReference.current.restartTimer();
+		chordTimerReference.current !== null && chordTimerReference.current.restartTimer();
 	}
 
 	function durationTimerComplete() {
@@ -58,7 +59,6 @@ export function ChordPage() {
 						startingTime={Number(config.timePerChord)}
 						onComplete={countdownCompleted}
 						formatNumber
-						className="timeRemainingCountdownTimer"
 					/>
 				</p>
 
@@ -67,7 +67,6 @@ export function ChordPage() {
 						startingTime={Number(config.duration) * 60}
 						onComplete={durationTimerComplete}
 						formatNumber
-						className="timeRemainingCountdownTimer"
 					/>
 				</p>
 

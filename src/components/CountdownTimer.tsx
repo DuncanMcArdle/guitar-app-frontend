@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 
-function formatTime(timeInSeconds) {
+function formatTime(timeInSeconds:number) {
 	let seconds = timeInSeconds;
 	let extension = 'second';
 	if (seconds > 60) {
@@ -11,21 +10,32 @@ function formatTime(timeInSeconds) {
 	return `${seconds} ${extension}${(seconds !== 1) ? 's' : ''}`;
 }
 
-export class CountdownTimer extends Component {
-	constructor(props) {
+interface Props {
+	startingTime: number,
+	onComplete: Function,
+	formatNumber: boolean,
+}
+
+interface State {
+	currentTime: number,
+	timer: number,
+}
+
+export class CountdownTimer extends Component<Props, State> {
+	constructor(props:Props) {
 		super(props);
 
 		const { startingTime } = this.props;
 
 		this.state = {
 			currentTime: startingTime,
-			timer: null,
+			timer: 0,
 		};
 	}
 
 	componentDidMount() {
 		this.setState({
-			timer: setTimeout(() => this.updateTimer(), 1000),
+			timer: window.setTimeout(() => this.updateTimer(), 1000),
 		});
 	}
 
@@ -52,7 +62,7 @@ export class CountdownTimer extends Component {
 			onComplete();
 		} else {
 			this.setState({
-				timer: setTimeout(() => this.updateTimer(), 1000),
+				timer: window.setTimeout(() => this.updateTimer(), 1000),
 			});
 		}
 	}
@@ -63,7 +73,7 @@ export class CountdownTimer extends Component {
 		// Reset the timer
 		this.setState({
 			currentTime: startingTime,
-			timer: setTimeout(() => this.updateTimer(), 1000),
+			timer: window.setTimeout(() => this.updateTimer(), 1000),
 		});
 	}
 
@@ -78,12 +88,5 @@ export class CountdownTimer extends Component {
 		);
 	}
 }
-
-// PropTypes
-CountdownTimer.propTypes = {
-	startingTime:	PropTypes.number.isRequired,
-	onComplete:		PropTypes.func.isRequired,
-	formatNumber:	PropTypes.bool.isRequired,
-};
 
 export default CountdownTimer;

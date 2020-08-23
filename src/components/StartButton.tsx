@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { MouseEventHandler } from 'react';
 import './StartButton.css';
 import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
 
-function StartButton(props) {
-	const { submitForm, text } = props;
+interface Props {
+	submitForm: MouseEventHandler,
+	text: string,
+}
 
+function StartButton({ submitForm, text }: Props) {
 	return (
 		<div>
 			<Button

@@ -1,11 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, FormEvent, FormEventHandler } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { setConfig } from '../apples/configSlice';
+import { setConfig } from '../redux/configSlice';
+
+interface LocalConfig {
+	chords: string,
+	showChord: string,
+	initialCountdown: number,
+	timePerChord: number,
+	duration: number,
+	errors: {
+		chords: string,
+		showChord: string,
+		initialCountdown: string,
+		timePerChord: string,
+		duration: string,
+		[key: string]: string,
+	},
+}
 
 export function HomePage() {
 	// Default state values
-	const [config, setLocalConfig] = useState({
+	const [config, setLocalConfig] = useState<LocalConfig>({
 		chords: '-1',
 		showChord: '-1',
 		initialCountdown: 3,
@@ -25,7 +41,7 @@ export function HomePage() {
 	const history = useHistory();
 
 	// Validate a form field
-	function validateFormField(fieldName, value) {
+	function validateFormField(fieldName:string, value: (string | number)) {
 		const { errors } = config;
 
 		// Reset any existing errors
@@ -59,11 +75,11 @@ export function HomePage() {
 		}
 
 		// Set the input's state and new value
-		setLocalConfig(() => ({ ...config, [fieldName]: value, [errors]: errors }));
+		setLocalConfig(() => ({ ...config, [fieldName]: value, [errors as any]: errors }));
 	}
 
 	// Handle form input changes
-	function handleFormInputChange(event) {
+	function handleFormInputChange(event:React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
 		event.persist();
 
 		const { name, value } = event.target;
@@ -96,7 +112,6 @@ export function HomePage() {
 			dispatch(setConfig({
 				chord:				config.chords,
 				showChord:			config.showChord,
-				something:			7,
 				initialCountdown:	config.initialCountdown,
 				timePerChord:		config.timePerChord,
 				duration:			config.duration,

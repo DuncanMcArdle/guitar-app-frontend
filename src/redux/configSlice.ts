@@ -1,9 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-	initialCountdown: null,
-	timePerChord: null,
-	duration: null,
+	chords: '-1',
+	showChord: '-1',
+	initialCountdown: 3,
+	timePerChord: 10,
+	duration: 5,
 };
 
 const configSlice = createSlice({

@@ -1,12 +1,13 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { RootState } from '../redux/store';
 
 export function FinishedPage() {
 	const history = useHistory();
 
 	// Load the config from the Redux store
-	const config = useSelector((state) => state.config);
+	const config = useSelector((state:RootState) => state.config);
 
 	function restartSession() {
 		history.push('/CountdownPage');
