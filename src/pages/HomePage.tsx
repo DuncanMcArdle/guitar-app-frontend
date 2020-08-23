@@ -2,6 +2,7 @@ import React, { useState, FormEvent, FormEventHandler } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setConfig } from '../redux/configSlice';
+import FormRow from '../components/FormRow';
 
 interface LocalConfig {
 	chords: string,
@@ -23,7 +24,7 @@ export function HomePage() {
 	// Default state values
 	const [config, setLocalConfig] = useState<LocalConfig>({
 		chords: '-1',
-		showChord: '-1',
+		showChord: '2',
 		initialCountdown: 3,
 		timePerChord: 5,
 		duration: 2,
@@ -128,53 +129,34 @@ export function HomePage() {
 
 				<h2>Guitar thing</h2>
 
-				<div className="chords">
-					<label htmlFor="chords">
-						Chords
-						<select name="chords" onChange={handleFormInputChange}>
-							<option value="-1">Please select...</option>
-							<option>Basic</option>
-							<option>Advanced</option>
-							<option>Expert</option>
-						</select>
-					</label>
-					{config.errors.chords.length > 0 && <span className="error">{config.errors.chords}</span>}
-				</div>
+				<FormRow title="Chords:" error={config.errors.chords} >
+					<select name="chords" onChange={handleFormInputChange}>
+						<option value="-1">Please select...</option>
+						<option>Basic</option>
+						<option>Advanced</option>
+						<option>Expert</option>
+					</select>
+				</FormRow>
 
-				<div className="showChord">
-					<label htmlFor="showChord">Show chord
-						<select name="showChord" onChange={handleFormInputChange}>
-							<option value="-1">Please select...</option>
-							<option>Yes</option>
-							<option>No</option>
-						</select>
-					</label>
-					{config.errors.showChord.length > 0 && <span className="error">{config.errors.showChord}</span>}
-				</div>
+				<FormRow title="Show chord: (disabled)" error={config.errors.showChord} >
+					<select name="showChord" disabled onChange={handleFormInputChange}>
+						<option value="-1">Please select...</option>
+						<option>Yes</option>
+						<option selected>No</option>
+					</select>
+				</FormRow>
 
-				<div className="initialCountdown">
-					<label htmlFor="initialCountdown">
-						Initial countdown (seconds)
-						<input name="initialCountdown" type="number" value={config.initialCountdown} onChange={handleFormInputChange} />
-					</label>
-					{config.errors.initialCountdown.length > 0 && <span className="error">{config.errors.initialCountdown}</span>}
-				</div>
+				<FormRow title="Initial countdown (seconds)" error={config.errors.initialCountdown} >
+					<input name="initialCountdown" type="number" value={config.initialCountdown} onChange={handleFormInputChange} />
+				</FormRow>
 
-				<div className="timePerChord">
-					<label htmlFor="timePerChord">
-						Time per chord (seconds)
-						<input name="timePerChord" type="number" value={config.timePerChord} onChange={handleFormInputChange} />
-					</label>
-					{config.errors.timePerChord.length > 0 && <span className="error">{config.errors.timePerChord}</span>}
-				</div>
+				<FormRow title="Time per chord (seconds)" error={config.errors.timePerChord} >
+					<input name="timePerChord" type="number" value={config.timePerChord} onChange={handleFormInputChange} />
+				</FormRow>
 
-				<div className="duration">
-					<label htmlFor="duration">
-						Duration (minutes)
-						<input name="duration" type="number" value={config.duration} onChange={handleFormInputChange} />
-					</label>
-					{config.errors.duration.length > 0 && <span className="error">{config.errors.duration}</span>}
-				</div>
+				<FormRow title="Duration (minutes)" error={config.errors.duration} >
+					<input name="duration" type="number" value={config.duration} onChange={handleFormInputChange} />
+				</FormRow>
 
 				<button type="button" onClick={submitForm}>Start</button>
 			</div>
