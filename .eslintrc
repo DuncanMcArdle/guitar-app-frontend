@@ -5,8 +5,16 @@
         "node": true,
         "jest": true
     },
-    "extends": "airbnb",
-    "parser": "babel-eslint",
+    "extends": [
+		"airbnb",
+		"eslint:recommended",
+		"plugin:@typescript-eslint/eslint-recommended",
+		"plugin:@typescript-eslint/recommended"
+	],
+	"parser": "@typescript-eslint/parser",
+	"plugins": [
+		"@typescript-eslint"
+	],
     "rules": {
         "indent": [2, "tab", { "SwitchCase": 1, "VariableDeclarator": 1 }],
         "no-tabs": 0,
@@ -17,6 +25,9 @@
         "no-param-reassign": ["error", { "props": false }],
         "react/jsx-one-expression-per-line": "off",
         "max-len": ["error", { "code": 150 }],
-        "no-console": "off"
+		"no-console": "off",
+		"react/jsx-filename-extension": [1, { "extensions": [".tsx", ".jsx"] }],
+		"@typescript-eslint/explicit-function-return-type": "off",
+		"@typescript-eslint/explicit-module-boundary-types": "off"
     }
 }
