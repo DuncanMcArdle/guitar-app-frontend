@@ -12,7 +12,7 @@ const Label = styled.div`
   margin-top: 1em;
   margin-bottom: 1em;
   text-align: left;
-`
+`;
 
 const Input = styled.div`
   width: 50%;
@@ -23,7 +23,7 @@ const Input = styled.div`
   input, select {
 	  width: 100%;
   }
-`
+`;
 
 const Error = styled.div`
 	float: left;  
@@ -34,16 +34,14 @@ const Error = styled.div`
   	:before {
 	  content: '* ';
 	}
-`
+`;
 
-export const FormRow: FunctionComponent<Props> = ({title, error, children}) => {
-	return (
-		<div>
-			<Label>{title}</Label>
-			<Input>{children}</Input>
-			{error && <Error>{error}</Error>}
-		</div>
-	)
-}
+export const FormRow: FunctionComponent<Props> = ({ title, error, children }) => (
+	<div>
+		<Label>{title}</Label>
+		<Input>{children}</Input>
+		{error && <Error>{error}</Error>}
+	</div>
+);
 
 export default FormRow;

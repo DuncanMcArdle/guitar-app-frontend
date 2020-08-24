@@ -14,17 +14,17 @@ const StyledButton = styled.button`
 		background-color: #4A4E69;
 		color: #fefefe;
 	}
-`
+`;
 
 interface Props {
 	text: string,
 	onClick: (event: React.MouseEvent<HTMLButtonElement>) => void,
 }
 
-export const Button: FunctionComponent<Props> = ({text, onClick}) => {
-	return (
-		<StyledButton onClick={onClick}>
-			{text}
-		</StyledButton>
-	)
-}
+const Button: FunctionComponent<Props> = ({ text, onClick }) => (
+	<StyledButton onClick={onClick}>
+		{text}
+	</StyledButton>
+);
+
+export default Button;

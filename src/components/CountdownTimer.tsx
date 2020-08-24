@@ -12,7 +12,7 @@ function formatTime(timeInSeconds:number) {
 
 interface Props {
 	startingTime: number,
-	onComplete: Function,
+	onComplete: () => void,
 	formatNumber: boolean,
 }
 
