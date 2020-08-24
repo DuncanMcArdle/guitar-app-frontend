@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { RootState } from '../redux/store';
-import { Button } from '../components/Button';
+import Button from '../components/Button';
 
 export function FinishedPage() {
 	const history = useHistory();

@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { CountdownTimer } from '../components/CountdownTimer';
 import { RootState } from '../redux/store';
-import { Button } from '../components/Button';
+import Button from '../components/Button';
 
 // Array of chords, starting with basic, then advanced, then expert
 const chords = [
@@ -33,7 +33,21 @@ export function ChordPage() {
 
 	function changeChord() {
 		// Calculate how many chords to choose from
-		const maxChords = config.chords.toUpperCase() === 'BASIC' ? numberOfBasicChords : config.chords.toUpperCase() === 'ADVANCED' ? numberOfAdvancedChords : chords.length;
+		let maxChords;
+		switch (config.chords.toUpperCase()) {
+			case 'BASIC': {
+				maxChords = numberOfBasicChords;
+				break;
+			}
+			case 'ADVANCED': {
+				maxChords = numberOfAdvancedChords;
+				break;
+			}
+			default: {
+				maxChords = chords.length;
+				break;
+			}
+		}
 
 		// Pick a random chord
 		const newChord = Math.floor(Math.random() * maxChords);
@@ -44,7 +58,11 @@ export function ChordPage() {
 	function countdownCompleted() {
 		// Show the next chord
 		changeChord();
-		chordTimerReference.current !== null && chordTimerReference.current.restartTimer();
+
+		// Restart the timer (if not null)
+		if (chordTimerReference.current !== null) {
+			chordTimerReference.current.restartTimer();
+		}
 	}
 
 	function durationTimerComplete() {

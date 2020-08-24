@@ -9,7 +9,8 @@
 		"airbnb",
 		"eslint:recommended",
 		"plugin:@typescript-eslint/eslint-recommended",
-		"plugin:@typescript-eslint/recommended"
+		"plugin:@typescript-eslint/recommended",
+		"plugin:import/typescript"
 	],
 	"parser": "@typescript-eslint/parser",
 	"plugins": [
@@ -28,6 +29,7 @@
 		"no-console": "off",
 		"react/jsx-filename-extension": [1, { "extensions": [".tsx", ".jsx"] }],
 		"@typescript-eslint/explicit-function-return-type": "off",
-		"@typescript-eslint/explicit-module-boundary-types": "off"
+		"@typescript-eslint/explicit-module-boundary-types": "off",
+		"import/extensions": "off"
     }
 }

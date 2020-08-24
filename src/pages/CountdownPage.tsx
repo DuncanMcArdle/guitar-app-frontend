@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { CountdownTimer } from '../components/CountdownTimer';
 import { RootState } from '../redux/store';
-import { Button } from '../components/Button';
+import Button from '../components/Button';
 
 export function CountdownPage() {
 	const history = useHistory();
