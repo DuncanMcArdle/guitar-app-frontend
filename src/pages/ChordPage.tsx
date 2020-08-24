@@ -5,6 +5,7 @@ import { CountdownTimer } from '../components/CountdownTimer';
 import { RootState } from '../redux/store';
 import { Button } from '../components/Button';
 
+// Array of chords, starting with basic, then advanced, then expert
 const chords = [
 	'A',
 	'Am',
@@ -14,6 +15,8 @@ const chords = [
 	'D',
 	'Dm',
 ];
+const numberOfBasicChords = 4;
+const numberOfAdvancedChords = 6;
 
 export function ChordPage() {
 	const [currentChord, setCurrentChord] = useState(Math.floor(Math.random() * chords.length));
@@ -29,8 +32,11 @@ export function ChordPage() {
 	}
 
 	function changeChord() {
+		// Calculate how many chords to choose from
+		const maxChords = config.chords.toUpperCase() === 'BASIC' ? numberOfBasicChords : config.chords.toUpperCase() === 'ADVANCED' ? numberOfAdvancedChords : chords.length;
+
 		// Pick a random chord
-		const newChord = Math.floor(Math.random() * chords.length);
+		const newChord = Math.floor(Math.random() * maxChords);
 
 		setCurrentChord(newChord);
 	}

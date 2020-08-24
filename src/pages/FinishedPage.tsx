@@ -26,7 +26,7 @@ export function FinishedPage() {
 			<h1>Lesson complete</h1>
 
 			<div>
-				<h2>Congratulation!</h2>
+				<h2>Congratulations!</h2>
 				<p>You completed the series, playing {chordsPlayed} chord(s) across a {config.duration} minute session.</p>
 			</div>
 

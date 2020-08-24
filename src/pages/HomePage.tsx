@@ -112,7 +112,7 @@ export function HomePage() {
 		if (!errorFound) {
 			// Update the Redux store
 			dispatch(setConfig({
-				chord:				config.chords,
+				chords:				config.chords,
 				showChord:			config.showChord,
 				initialCountdown:	config.initialCountdown,
 				timePerChord:		config.timePerChord,
