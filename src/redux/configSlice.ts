@@ -13,11 +13,11 @@ const configSlice = createSlice({
 	initialState,
 	reducers: {
 		setConfig: (state, action) => {
-			state.chords = 				action.payload.chords;
-			state.showChord = 			action.payload.showChord;
-			state.initialCountdown =	action.payload.initialCountdown;
-			state.timePerChord =		action.payload.timePerChord;
-			state.duration = 			action.payload.duration;
+			state.chords = action.payload.chords;
+			state.showChord = action.payload.showChord;
+			state.initialCountdown = action.payload.initialCountdown;
+			state.timePerChord = action.payload.timePerChord;
+			state.duration = action.payload.duration;
 		},
 	},
 });

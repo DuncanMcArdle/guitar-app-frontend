@@ -6,15 +6,7 @@ import { RootState } from '../redux/store';
 import Button from '../components/Button';
 
 // Array of chords, starting with basic, then advanced, then expert
-const chords = [
-	'A',
-	'Am',
-	'E',
-	'Em',
-	'Fmaj',
-	'D',
-	'Dm',
-];
+const chords = ['A', 'Am', 'E', 'Em', 'Fmaj', 'D', 'Dm'];
 const numberOfBasicChords = 4;
 const numberOfAdvancedChords = 6;
 
@@ -23,7 +15,7 @@ export function ChordPage() {
 	const chordTimerReference = useRef<CountdownTimer>(null);
 
 	// Load the config from the Redux store
-	const config = useSelector((state:RootState) => state.config);
+	const config = useSelector((state: RootState) => state.config);
 
 	const history = useHistory();
 
@@ -79,7 +71,8 @@ export function ChordPage() {
 				{config.showChord.toUpperCase() === 'YES' && <p className="currentChord">(would be showing the chord here)</p>}
 
 				<p className="chordTimeRemaining">
-					Play for <CountdownTimer
+					Play for{' '}
+					<CountdownTimer
 						ref={chordTimerReference}
 						startingTime={Number(config.timePerChord)}
 						onComplete={countdownCompleted}
@@ -88,11 +81,8 @@ export function ChordPage() {
 				</p>
 
 				<p className="totalTimeRemaining">
-					Total time remaining: <CountdownTimer
-						startingTime={Number(config.duration) * 60}
-						onComplete={durationTimerComplete}
-						formatNumber
-					/>
+					Total time remaining:{' '}
+					<CountdownTimer startingTime={Number(config.duration) * 60} onComplete={durationTimerComplete} formatNumber />
 				</p>
 			</div>
 

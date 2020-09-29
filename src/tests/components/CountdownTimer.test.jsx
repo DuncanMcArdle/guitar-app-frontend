@@ -1,9 +1,7 @@
 import '@testing-library/jest-dom/extend-expect';
 import React from 'react';
-import {
-	render, waitFor,
-} from '@testing-library/react';
-import CountdownTimer from '../../components/CountdownTimer.tsx';
+import { render, waitFor } from '@testing-library/react';
+import { CountdownTimer } from '../../components/CountdownTimer.tsx';
 
 describe('Button component', () => {
 	const onComplete = jest.fn();

@@ -9,7 +9,7 @@ export function CountdownPage() {
 	const history = useHistory();
 
 	// Load the config from the Redux store
-	const config = useSelector((state:RootState) => state.config);
+	const config = useSelector((state: RootState) => state.config);
 
 	function goBack() {
 		history.push('/');
@@ -21,7 +21,6 @@ export function CountdownPage() {
 
 	return (
 		<div className="form__wrapper">
-
 			<h1>Get ready!</h1>
 
 			<h2 className="countdownTimer">

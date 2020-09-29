@@ -1,9 +1,7 @@
 import '@testing-library/jest-dom/extend-expect';
 import React from 'react';
-import {
-	render, fireEvent,
-} from '@testing-library/react';
-import FormRow from '../../components/FormRow.tsx';
+import { render } from '@testing-library/react';
+import { FormRow } from '../../components/FormRow.tsx';
 
 describe('FormRow component', () => {
 	let formRow;
@@ -17,7 +15,11 @@ describe('FormRow component', () => {
 	});
 
 	test('Shows an input', () => {
-		formRow = render(<FormRow title={sampleTitle}><input placeholder={samplePlaceholder} /></FormRow>);
+		formRow = render(
+			<FormRow title={sampleTitle}>
+				<input placeholder={samplePlaceholder} />
+			</FormRow>,
+		);
 		expect(formRow.getByPlaceholderText(samplePlaceholder)).toBeInTheDocument();
 	});
 

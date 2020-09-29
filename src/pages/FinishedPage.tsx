@@ -8,7 +8,7 @@ export function FinishedPage() {
 	const history = useHistory();
 
 	// Load the config from the Redux store
-	const config = useSelector((state:RootState) => state.config);
+	const config = useSelector((state: RootState) => state.config);
 
 	function restartSession() {
 		history.push('/CountdownPage');
@@ -27,7 +27,9 @@ export function FinishedPage() {
 
 			<div>
 				<h2>Congratulations!</h2>
-				<p>You completed the series, playing {chordsPlayed} chord(s) across a {config.duration} minute session.</p>
+				<p>
+					You completed the series, playing {chordsPlayed} chord(s) across a {config.duration} minute session.
+				</p>
 			</div>
 
 			<div>

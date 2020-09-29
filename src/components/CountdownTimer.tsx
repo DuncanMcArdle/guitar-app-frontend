@@ -1,28 +1,28 @@
 import React, { Component } from 'react';
 
-function formatTime(timeInSeconds:number) {
+function formatTime(timeInSeconds: number) {
 	let seconds = timeInSeconds;
 	let extension = 'second';
 	if (seconds > 60) {
 		seconds = Math.ceil(timeInSeconds / 60);
 		extension = 'minute';
 	}
-	return `${seconds} ${extension}${(seconds !== 1) ? 's' : ''}`;
+	return `${seconds} ${extension}${seconds !== 1 ? 's' : ''}`;
 }
 
 interface Props {
-	startingTime: number,
-	onComplete: () => void,
-	formatNumber: boolean,
+	startingTime: number;
+	onComplete: () => void;
+	formatNumber: boolean;
 }
 
 interface State {
-	currentTime: number,
-	timer: number,
+	currentTime: number;
+	timer: number;
 }
 
 export class CountdownTimer extends Component<Props, State> {
-	constructor(props:Props) {
+	constructor(props: Props) {
 		super(props);
 
 		const { startingTime } = this.props;
@@ -65,7 +65,7 @@ export class CountdownTimer extends Component<Props, State> {
 				timer: window.setTimeout(() => this.updateTimer(), 1000),
 			});
 		}
-	}
+	};
 
 	restartTimer() {
 		const { startingTime } = this.props;
@@ -81,11 +81,7 @@ export class CountdownTimer extends Component<Props, State> {
 		const { currentTime } = this.state;
 		const { formatNumber } = this.props;
 
-		return (
-			<span>
-				{formatNumber ? formatTime(currentTime) : currentTime}
-			</span>
-		);
+		return <span>{formatNumber ? formatTime(currentTime) : currentTime}</span>;
 	}
 }
 

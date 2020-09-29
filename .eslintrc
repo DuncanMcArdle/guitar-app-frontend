@@ -13,9 +13,7 @@
 		"plugin:import/typescript"
 	],
 	"parser": "@typescript-eslint/parser",
-	"plugins": [
-		"@typescript-eslint"
-	],
+	"plugins": ["@typescript-eslint", "prettier"],
     "rules": {
         "indent": [2, "tab", { "SwitchCase": 1, "VariableDeclarator": 1 }],
         "no-tabs": 0,

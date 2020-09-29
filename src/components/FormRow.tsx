@@ -2,37 +2,38 @@ import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
 
 interface Props {
-	title:string,
-	error?:string,
+	title: string;
+	error?: string;
 }
 
 const Label = styled.div`
-  width: 50%;
-  float: left;
-  margin-top: 1em;
-  margin-bottom: 1em;
-  text-align: left;
+	width: 50%;
+	float: left;
+	margin-top: 1em;
+	margin-bottom: 1em;
+	text-align: left;
 `;
 
 const Input = styled.div`
-  width: 50%;
-  float: right;
-  margin-top: 1em;
-  margin-bottom: 1em;
+	width: 50%;
+	float: right;
+	margin-top: 1em;
+	margin-bottom: 1em;
 
-  input, select {
-	  width: 100%;
-  }
+	input,
+	select {
+		width: 100%;
+	}
 `;
 
 const Error = styled.div`
-	float: left;  
+	float: left;
 	width: 100%;
-  	color: red;
-  	font-weight: bold;
+	color: red;
+	font-weight: bold;
 
-  	:before {
-	  content: '* ';
+	:before {
+		content: '* ';
 	}
 `;
 
